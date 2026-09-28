@@ -19,7 +19,7 @@ model Transaction {
   amount Decimal
   category TransactionCategory
   paymentMethod TransactionPaymentMethod @map("payment_method")
-  Date DateTime
+  date DateTime
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
 
