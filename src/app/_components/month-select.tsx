@@ -9,7 +9,7 @@ export function MonthSelect() {
   const currentMonth = params.get("month") ?? "01"
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    router.push(`/dashboard?month=${e.target.value}`)
+    router.push(`?month=${e.target.value}`)
   }
 
   return (
