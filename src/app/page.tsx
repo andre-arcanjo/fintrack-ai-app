@@ -5,15 +5,22 @@ import ChartCard from './_components/chart-card';
 import { FinancialMetricCard } from './_components/financial-metric-card';
 import { AiInsights } from './_components/ai-insights';
 import Transactions from './_components/recent-transactions';
+import { getDashboard } from './_data/get-dashboard';
+import dayjs from 'dayjs';
 
-const data = {
-    balance: 1000,
-    depositsTotal: 500,
-    expensesTotal: 500,
-    investmentsTotal: 1000,
-};
+interface DashBoardPageProps {
+    searchParams: {
+        month: string
+    }
+}
 
-export default function Home() {
+export default async function Home({ searchParams }: DashBoardPageProps) {
+
+    const month = searchParams.month ?? dayjs().format('MM')
+    const data = await getDashboard(month)
+
+    
+
     return (
         <div className="flex min-h-screen bg-background-dark">
             <Sidebar />
@@ -22,7 +29,7 @@ export default function Home() {
                 <main className="p-8 space-y-8">
                     <section className="grid lg:grid-cols-3 grid-cols-1 gap-6">
                         <div className="lg:col-span-2 col-span-1">
-                            <BalanceCard {...data} />
+                            <BalanceCard balance={data.balance} depositsTotal={data.depositsTotal} expensesTotal={data.expensesTotal} />
                         </div>
                         <FinancialMetricCard />
                     </section>
