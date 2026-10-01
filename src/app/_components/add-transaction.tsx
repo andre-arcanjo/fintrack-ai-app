@@ -20,7 +20,7 @@ import {
 } from './ui/select';
 import Image from 'next/image';
 import ConfirmIcon from '../../assets/confirm-icon.png';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
     TRANSACTION_CATEGORY_OPTIONS,
@@ -43,7 +43,7 @@ export const AddTransactionButton = () => {
         control,
         formState: { errors, isSubmitting },
     } = useForm<CreateTransactionFormData>({
-        resolver: zodResolver(createTransactionFormSchema),
+        resolver: zodResolver(createTransactionFormSchema) as unknown as Resolver<CreateTransactionFormData>,
         defaultValues: {
             name: '' as any,
             amount: '' as any,
