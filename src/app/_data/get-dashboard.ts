@@ -1,7 +1,20 @@
 import { TransactionType } from '@/src/generated/prisma/enums';
 import { prisma } from '@/src/lib/prisma';
+import { auth } from '@/src/lib/auth';
+import { redirect } from 'next/navigation';
+import { headers } from 'next/headers';
 
 export const getDashboard = async (month: string) => {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
+    const userId = session?.user.id;
+
+    if (!userId) {
+        redirect('sign-in');
+    }
+
     const year = 2026;
 
     const startOfMonth = new Date(`${year}-${month}-01T00:00:00.000Z`);
@@ -13,6 +26,7 @@ export const getDashboard = async (month: string) => {
     );
 
     const where = {
+        userId,
         date: {
             gte: startOfMonth,
             lt: startofNextMonth,
@@ -93,26 +107,28 @@ export const getDashboard = async (month: string) => {
             by: ['category'],
             where: {
                 ...where,
-                type: TransactionType.EXPENSE
+                type: TransactionType.EXPENSE,
             },
             _sum: {
-                amount: true
-            }
-        })).map((category) => ({
-            category: category.category,
-            totalAmount: Number(category._sum.amount),
-            percentTotal: Math.round(
-                (Number(category._sum.amount) / Number(expensesTotal)) * 100
-            )
-        }))
+                amount: true,
+            },
+        })
+    ).map((category) => ({
+        category: category.category,
+        totalAmount: Number(category._sum.amount),
+        percentTotal: Math.round(
+            (Number(category._sum.amount) / Number(expensesTotal)) * 100
+        ),
+    }));
 
-        return {
-            depositsTotal,
-            investmentsTotal,
-            expensesTotal,
-            balance,
-            transactionsTotal,
-            typePercent,
-            totalExpensesPerCategory
-        }
+    return {
+        depositsTotal,
+        investmentsTotal,
+        expensesTotal,
+        balance,
+        transactionsTotal,
+        typePercent,
+        totalExpensesPerCategory,
+        session,
+    };
 };
