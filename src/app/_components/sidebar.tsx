@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import dashboardIcon from '../../assets/dashboard-icon.png';
 import transactionIcon from '../../assets/transaction-icon.png';
-import logoutIcon from '../../assets/logout-icon.png';
 import logo from '../../assets/sidebar.png';
+import { Logout } from './logout';
 
 const navItems = [
     { href: '/', label: 'Dashboard', icon: dashboardIcon },
@@ -43,15 +43,7 @@ export const Sidebar = () => {
             </nav>
 
             <div className="border-t border-[#1D293D] px-6 py-6">
-                <a
-                    href="#"
-                    className="flex items-center gap-3 rounded-xl px-4 py-3 text-text-secondary"
-                >
-                    <Image src={logoutIcon} alt="Logout" />
-                    <span className="text-base font-medium leading-normal text-center">
-                        Sair
-                    </span>
-                </a>
+                <Logout />
             </div>
         </aside>
     );
