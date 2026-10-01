@@ -4,7 +4,7 @@ import Header from './_components/header';
 import ChartCard from './_components/chart-card';
 import { FinancialMetricCard } from './_components/financial-metric-card';
 import { AiInsights } from './_components/ai-insights';
-import Transactions from './_components/recent-transactions';
+import { RecentTransactions } from './_components/recent-transactions';
 import { getDashboard } from './_data/get-dashboard';
 import dayjs from 'dayjs';
 
@@ -17,9 +17,7 @@ interface DashBoardPageProps {
 export default async function Home({ searchParams }: DashBoardPageProps) {
 
     const month = searchParams.month ?? dayjs().format('MM')
-    const data = await getDashboard(month)
-
-    
+    const data = await getDashboard(month)    
 
     return (
         <div className="flex min-h-screen bg-background-dark">
@@ -48,7 +46,7 @@ export default async function Home({ searchParams }: DashBoardPageProps) {
                         </div>
                     </section>
                     <section>
-                        <Transactions />
+                        <RecentTransactions />
                     </section>
                 </main>
             </div>
