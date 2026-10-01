@@ -19,4 +19,4 @@ export const createTransactionFormSchema = z.object({
     date: z.coerce.date(),
 });
 
-export type CreateTransactionFormData = z.input<typeof createTransactionFormSchema>;
+export type CreateTransactionFormData = z.infer<typeof createTransactionFormSchema>;
