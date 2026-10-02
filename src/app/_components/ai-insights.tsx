@@ -100,7 +100,7 @@ export const AiInsights = ({
             </div>
 
             {loading ? (
-                <div className="bg-[#161b26] p-8 rounded-2xl border border-[#1d293d] flex flex-col items-center justify-center gap-4 min-h-[200px]">
+                <div className="bg-[#161b26] p-8 rounded-2xl border border-[#1d293d] flex flex-col items-center justify-center gap-4 min-h-50">
                     <Loader2
                         className="h-10 w-10 animate-spin text-violet-500"
                         aria-hidden
