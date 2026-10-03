@@ -42,7 +42,21 @@ export default async function Home({ searchParams }: DashBoardPageProps) {
                             />
                         </div>
                         <div className="flex-1">
-                            <AiInsights />
+                            <AiInsights
+                                month={month}
+                                year={2026}
+                                depositsTotal={data.depositsTotal}
+                                expensesTotal={data.expensesTotal}
+                                investmentsTotal={data.investmentsTotal}
+                                balance={data.balance}
+                                totalExpensePerCategory={data.totalExpensesPerCategory.map(
+                                    ({ category, totalAmount, percentTotal }) => ({
+                                        category,
+                                        totalAmount,
+                                        percentOfTotal: percentTotal,
+                                    })
+                                )}
+                            />
                         </div>
                     </section>
                     <section>
