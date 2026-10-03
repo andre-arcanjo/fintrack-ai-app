@@ -9,14 +9,15 @@ import { getDashboard } from './_data/get-dashboard';
 import dayjs from 'dayjs';
 
 interface DashBoardPageProps {
-    searchParams: {
-        month: string
-    }
+    searchParams: Promise<{
+        month?: string | string[];
+    }>;
 }
 
 export default async function Home({ searchParams }: DashBoardPageProps) {
 
-    const month = searchParams.month ?? dayjs().format('MM')
+    const { month: monthParam } = await searchParams;
+    const month = (Array.isArray(monthParam) ? monthParam[0] : monthParam) ?? dayjs().format('MM');
     const data = await getDashboard(month)    
 
     return (
