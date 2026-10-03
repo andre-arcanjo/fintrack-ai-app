@@ -238,7 +238,11 @@ export const AddTransactionButton = () => {
                         </div>
 
                         <DialogFooter className="gap-4 border-none bg-card-dark">
-                            <button className="border border-[#CAD5E2] rounded-lg w-1/3 py-2.5 cursor-pointer">
+                            <button
+                                type="button"
+                                onClick={() => setIsOpen(false)}
+                                className="border border-[#CAD5E2] rounded-lg w-1/3 py-2.5 cursor-pointer"
+                            >
                                 Cancelar
                             </button>
                             <button
