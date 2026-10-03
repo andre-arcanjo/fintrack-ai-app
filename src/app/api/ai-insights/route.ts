@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { auth } from '@/src/lib/auth';
 import { TRANSACTION_CATEGORY_LABELS } from '../../_constants/transaction';
 import type { TransactionCategory } from '../../../generated/prisma/client';
 
@@ -42,6 +43,15 @@ function formatBRL(value: number) {
 }
 
 export async function POST(req: Request) {
+    const session = await auth.api.getSession({ headers: req.headers });
+
+    if (!session?.user?.id) {
+        return NextResponse.json(
+            { error: 'Faça login para gerar insights.' },
+            { status: 401 }
+        );
+    }
+
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
         return NextResponse.json(
