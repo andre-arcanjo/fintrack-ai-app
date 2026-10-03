@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { TransactionIcon } from './transaction-icon';
 import { AddTransactionButton } from './add-transaction';
 import Link from 'next/link';
@@ -26,7 +25,11 @@ export const RecentTransactions = async () => {
                         <div className="flex-1">
                             <p>{transaction.name}</p>
                             <p className="text-sm text-muted-foreground">
-                                {dayjs(transaction.date).format('DD [de] MMMM')}{' '}
+                                {transaction.date.toLocaleDateString('pt-BR', {
+                                    timeZone: 'UTC',
+                                    day: '2-digit',
+                                    month: 'long',
+                                })}{' '}
                                 • {transaction.category}
                             </p>
                         </div>

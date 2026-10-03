@@ -4,7 +4,7 @@ import { auth } from '@/src/lib/auth';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 
-export const getDashboard = async (month: string) => {
+export const getDashboard = async (month: string, year: number) => {
     const session = await auth.api.getSession({
         headers: await headers(),
     });
@@ -14,8 +14,6 @@ export const getDashboard = async (month: string) => {
     if (!userId) {
         redirect('sign-in');
     }
-
-    const year = 2026;
 
     const startOfMonth = new Date(`${year}-${month}-01T00:00:00.000Z`);
 

@@ -17,8 +17,10 @@ interface DashBoardPageProps {
 export default async function Home({ searchParams }: DashBoardPageProps) {
 
     const { month: monthParam } = await searchParams;
-    const month = (Array.isArray(monthParam) ? monthParam[0] : monthParam) ?? dayjs().format('MM');
-    const data = await getDashboard(month)    
+    const now = dayjs();
+    const year = now.year();
+    const month = (Array.isArray(monthParam) ? monthParam[0] : monthParam) ?? now.format('MM');
+    const data = await getDashboard(month, year)
 
     return (
         <div className="flex min-h-screen bg-background-dark">
@@ -36,6 +38,7 @@ export default async function Home({ searchParams }: DashBoardPageProps) {
                     <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                         <div className="flex-1">
                             <ChartCard
+                                month={month}
                                 depositsTotal={data.depositsTotal}
                                 expensesTotal={data.expensesTotal}
                                 investmentsTotal={data.investmentsTotal}
@@ -45,7 +48,7 @@ export default async function Home({ searchParams }: DashBoardPageProps) {
                         <div className="flex-1">
                             <AiInsights
                                 month={month}
-                                year={2026}
+                                year={year}
                                 depositsTotal={data.depositsTotal}
                                 expensesTotal={data.expensesTotal}
                                 investmentsTotal={data.investmentsTotal}
