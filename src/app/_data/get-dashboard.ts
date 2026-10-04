@@ -75,6 +75,27 @@ export const getDashboard = async (month: string, year: number) => {
 
     const balance = depositsTotal - investmentsTotal - expensesTotal;
 
+    const previousMonthTotals = await prisma.transaction.groupBy({
+        by: ['type'],
+        where: {
+            userId,
+            date: {
+                gte: new Date(Date.UTC(year, Number(month) - 2, 1)),
+                lt: startOfMonth,
+            },
+            type: { in: [TransactionType.DEPOSIT, TransactionType.EXPENSE] },
+        },
+        _sum: { amount: true },
+    });
+
+    const savings = depositsTotal - expensesTotal;
+    const previousSavings = previousMonthTotals.length === 0
+        ? null
+        : previousMonthTotals.reduce((total, transaction) => {
+            const amount = Number(transaction._sum.amount);
+            return total + (transaction.type === TransactionType.DEPOSIT ? amount : -amount);
+        }, 0);
+
     const transactionsTotal = Number(
         (
             await prisma.transaction.aggregate({
@@ -120,6 +141,8 @@ export const getDashboard = async (month: string, year: number) => {
     }));
 
     return {
+        savings,
+        previousSavings,
         depositsTotal,
         investmentsTotal,
         expensesTotal,

@@ -32,7 +32,10 @@ export default async function Home({ searchParams }: DashBoardPageProps) {
                         <div className="lg:col-span-2 col-span-1">
                             <BalanceCard balance={data.balance} depositsTotal={data.depositsTotal} expensesTotal={data.expensesTotal} />
                         </div>
-                        <FinancialMetricCard />
+                        <FinancialMetricCard
+                            savings={data.savings}
+                            previousSavings={data.previousSavings}
+                        />
                     </section>
 
                     <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
