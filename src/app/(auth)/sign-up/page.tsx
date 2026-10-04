@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Image from 'next/image';
 import ArrowIcon from '../../../assets/arrow-icon.png';
@@ -13,7 +13,10 @@ import { useRouter } from 'next/navigation';
 
 const signUpFormSchema = z.object({
     name: z.string().trim().nonempty('O nome é obrigatório.'),
-    email: z.string().min(1, 'Email é obrigatório.').regex(z.regexes.email, 'Informe um email válido.'),
+    email: z
+        .string()
+        .min(1, 'Email é obrigatório.')
+        .regex(z.regexes.email, 'Informe um email válido.'),
     password: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres.'),
 });
 
@@ -39,7 +42,7 @@ export default function SignUpPage() {
     });
 
     const onSubmit = async (data: signUpFormData) => {
-        console.log(data);
+        setApiError('');
         try {
             const { data: result, error: err } = await authClient.signUp.email({
                 name: data.name,
@@ -55,7 +58,7 @@ export default function SignUpPage() {
 
             if (result) router.push('/');
 
-            reset()
+            reset();
         } catch (error) {
             setApiError('Erro inesperado. Tente novamente.');
         }
@@ -116,12 +119,23 @@ export default function SignUpPage() {
                     </p>
                 )}
 
+                {apiError && (
+                    <p role="alert" className="text-sm text-red-500">
+                        {apiError}
+                    </p>
+                )}
+
                 <button
                     type="submit"
-                    className="w-full bg-[#9333EA] flex items-center justify-center gap-2 font-semibold cursor-pointer rounded-2xl py-4" disabled={isSubmitting}
+                    className="w-full bg-[#9333EA] flex items-center justify-center gap-2 font-semibold cursor-pointer rounded-2xl py-4"
+                    disabled={isSubmitting}
                 >
-                    <span>Criar Conta</span>
-                    <Image src={ArrowIcon} alt="Ícone de seta do botão" />
+                    <span>
+                        {isSubmitting ? 'Criando conta...' : 'Criar conta'}
+                    </span>
+                    {!isSubmitting && (
+                        <Image src={ArrowIcon} alt="Ícone de seta do botão" />
+                    )}
                 </button>
             </form>
         </AuthLayout>

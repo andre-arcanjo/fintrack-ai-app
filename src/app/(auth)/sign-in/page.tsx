@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { AuthLayout } from '../_components/auth-layout';
 import ArrowIcon from '../../../assets/arrow-icon.png';
@@ -38,29 +38,29 @@ export default function SignInPage() {
         mode: 'onBlur',
     });
 
-    const router = useRouter()
+    const router = useRouter();
 
     const onSubmit = async (data: SignInFormData) => {
-        console.log(data)
+        setApiError('');
         try {
-                    const { data: result, error: err } = await authClient.signIn.email({
-                        email: data.email,
-                        password: data.password,
-                        callbackURL: '/',
-                    });
-        
-                    if (err) {
-                        setApiError(err.message ?? 'Erro ao criar conta.');
-                        return;
-                    }
-        
-                    if (result) router.push('/');
-        
-                    reset()
-                } catch (error) {
-                    setApiError('Erro inesperado. Tente novamente.');
-                }
-    }
+            const { data: result, error: err } = await authClient.signIn.email({
+                email: data.email,
+                password: data.password,
+                callbackURL: '/',
+            });
+
+            if (err) {
+                setApiError(err.message ?? 'Erro ao entrar na conta.');
+                return;
+            }
+
+            if (result) router.push('/');
+
+            reset();
+        } catch (error) {
+            setApiError('Erro inesperado. Tente novamente.');
+        }
+    };
 
     return (
         <AuthLayout
@@ -102,13 +102,22 @@ export default function SignInPage() {
                         {errors.password.message}
                     </p>
                 )}
-                
+
+                {apiError && (
+                    <p role="alert" className="text-sm text-red-500">
+                        {apiError}
+                    </p>
+                )}
+
                 <button
                     type="submit"
                     className="w-full bg-[#9333EA] flex items-center justify-center gap-2 font-semibold cursor-pointer rounded-2xl py-4"
+                    disabled={isSubmitting}
                 >
-                    <span>Entrar</span>
-                    <Image src={ArrowIcon} alt="Ícone de seta do botão" />
+                    <span>{isSubmitting ? 'Entrando...' : 'Entrar'}</span>
+                    {!isSubmitting && (
+                        <Image src={ArrowIcon} alt="Ícone de seta do botão" />
+                    )}
                 </button>
             </form>
         </AuthLayout>
