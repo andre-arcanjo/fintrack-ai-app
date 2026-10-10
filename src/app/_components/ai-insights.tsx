@@ -131,8 +131,11 @@ export const AiInsights = ({
                                 <p className="text-slate-400 text-sm">
                                     Categoria com maior gasto
                                 </p>
-                                <p className="font-semibold text-white">
-                                    {topCategory}: {topCategoryAmount}
+                                <p className="font-semibold">
+                                    {topCategory}:{' '}
+                                    <span className="text-[#9333EA]">
+                                        {topCategoryAmount}
+                                    </span>
                                 </p>
                             </div>
                         </div>
@@ -163,7 +166,10 @@ export const AiInsights = ({
                 </>
             )}
 
-            <button className="flex items-center justify-center gap-3 w-full border-2 border-dashed border-card-dark py-4 rounded-2xl hover:border-[#9333EA] hover:text-[#9333EA] cursor-pointer" onClick={fetchInsights}>
+            <button
+                className="flex items-center justify-center gap-3 w-full border-2 border-dashed border-card-dark py-4 rounded-2xl hover:border-[#9333EA] hover:text-[#9333EA] cursor-pointer"
+                onClick={fetchInsights}
+            >
                 <Image src={refreshIcon} alt="Refresh icon" />
                 <span>Atualizar análise</span>
             </button>
