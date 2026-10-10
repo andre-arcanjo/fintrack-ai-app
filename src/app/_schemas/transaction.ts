@@ -8,7 +8,9 @@ import z from 'zod';
 
 export const createTransactionFormSchema = z.object({
     name: z.string().trim().nonempty('O nome é obrigatório'),
-    amount: z.coerce.number().positive({ error: 'O valor deve ser positivo.' }),
+    amount: z.coerce.number()
+        .positive({ error: 'O valor deve ser positivo.' })
+        .multipleOf(0.01, { error: 'O valor deve ter no máximo duas casas decimais.' }),
     type: z.enum(TransactionType, { error: 'O tipo é obrigatório' }),
     category: z.enum(TransactionCategory, {
         error: 'A categoria é obrigatória.',
