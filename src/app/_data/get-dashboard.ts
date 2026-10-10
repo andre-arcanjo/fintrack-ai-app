@@ -73,7 +73,11 @@ export const getDashboard = async (month: string, year: number) => {
         )._sum.amount
     );
 
-    const balance = depositsTotal - investmentsTotal - expensesTotal;
+    const balance = (
+        Math.round(depositsTotal * 100)
+        - Math.round(investmentsTotal * 100)
+        - Math.round(expensesTotal * 100)
+    ) / 100;
 
     const previousMonthTotals = await prisma.transaction.groupBy({
         by: ['type'],
