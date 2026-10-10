@@ -40,6 +40,7 @@ export const AiInsights = ({
     investmentsTotal,
     totalExpensePerCategory,
 }: AiInsightsProps) => {
+    const hasTransactions = depositsTotal > 0 || expensesTotal > 0 || investmentsTotal > 0;
     const activeRequest = useRef<AbortController | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -51,6 +52,14 @@ export const AiInsights = ({
 
     const fetchInsights = useCallback(async () => {
         activeRequest.current?.abort();
+        if (!hasTransactions) {
+            setLoading(false);
+            setError(null);
+            setSuggestion(null);
+            setTopCategory(null);
+            setTopCategoryAmount(null);
+            return;
+        }
         const controller = new AbortController();
         activeRequest.current = controller;
         setLoading(true);
@@ -96,7 +105,7 @@ export const AiInsights = ({
                 setLoading(false);
             }
         }
-    }, [month, year, depositsTotal, expensesTotal, investmentsTotal, balance, totalExpensePerCategory]);
+    }, [month, year, depositsTotal, expensesTotal, investmentsTotal, balance, totalExpensePerCategory, hasTransactions]);
 
     useEffect(() => {
         fetchInsights();
@@ -110,7 +119,11 @@ export const AiInsights = ({
                 <h3 className="text-xl font-bold">Insights com IA</h3>
             </div>
 
-            {loading ? (
+            {!hasTransactions ? (
+                <div className="bg-[#161b26] p-6 rounded-2xl border border-[#1d293d] text-center text-slate-400 text-sm">
+                    Adicione transações no mês para receber sugestões da IA.
+                </div>
+            ) : loading ? (
                 <div className="bg-[#161b26] p-8 rounded-2xl border border-[#1d293d] flex flex-col items-center justify-center gap-4 min-h-50">
                     <Loader2
                         className="h-10 w-10 animate-spin text-violet-500"
@@ -178,7 +191,8 @@ export const AiInsights = ({
             )}
 
             <button
-                className="flex items-center justify-center gap-3 w-full border-2 border-dashed border-card-dark py-4 rounded-2xl hover:border-[#9333EA] hover:text-[#9333EA] cursor-pointer"
+                className="flex items-center justify-center gap-3 w-full border-2 border-dashed border-card-dark py-4 rounded-2xl hover:border-[#9333EA] hover:text-[#9333EA] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={!hasTransactions}
                 onClick={fetchInsights}
             >
                 <Image src={refreshIcon} alt="Refresh icon" />
