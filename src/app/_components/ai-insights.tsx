@@ -6,7 +6,7 @@ import starIcon from '../../assets/stars-icon.png';
 import bulbIcon from '../../assets/bulb-icon.png';
 import refreshIcon from '../../assets/refresh-icon.png';
 import { TransactionCategory } from '@/src/generated/prisma/enums';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 
 interface CategorySummary {
@@ -49,7 +49,7 @@ export const AiInsights = ({
         null
     );
 
-    const fetchInsights = async () => {
+    const fetchInsights = useCallback(async () => {
         activeRequest.current?.abort();
         const controller = new AbortController();
         activeRequest.current = controller;
@@ -96,12 +96,12 @@ export const AiInsights = ({
                 setLoading(false);
             }
         }
-    };
+    }, [month, year, depositsTotal, expensesTotal, investmentsTotal, balance, totalExpensePerCategory]);
 
     useEffect(() => {
         fetchInsights();
         return () => activeRequest.current?.abort();
-    }, [month, year, depositsTotal, expensesTotal, investmentsTotal, balance]);
+    }, [fetchInsights]);
 
     return (
         <div className="space-y-6">
