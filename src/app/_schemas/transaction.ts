@@ -18,7 +18,11 @@ export const createTransactionFormSchema = z.object({
     paymentMethod: z.enum(TransactionPaymentMethod, {
         error: 'O método de pagamento é obrigatório.',
     }),
-    date: z.coerce.date(),
+    date: z.union([
+        z.iso.date({ error: 'Informe uma data válida.' })
+            .transform((value) => new Date(`${value}T00:00:00.000Z`)),
+        z.date(),
+    ], { error: 'Informe uma data válida.' }),
 });
 
 export type CreateTransactionFormData = z.infer<typeof createTransactionFormSchema>;
