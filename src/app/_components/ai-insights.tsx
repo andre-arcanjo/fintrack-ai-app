@@ -6,7 +6,7 @@ import starIcon from '../../assets/stars-icon.png';
 import bulbIcon from '../../assets/bulb-icon.png';
 import refreshIcon from '../../assets/refresh-icon.png';
 import { TransactionCategory } from '@/src/generated/prisma/enums';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 
 interface CategorySummary {
@@ -40,6 +40,7 @@ export const AiInsights = ({
     investmentsTotal,
     totalExpensePerCategory,
 }: AiInsightsProps) => {
+    const activeRequest = useRef<AbortController | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [suggestion, setSuggestion] = useState<string | null>(null);
@@ -49,12 +50,16 @@ export const AiInsights = ({
     );
 
     const fetchInsights = async () => {
+        activeRequest.current?.abort();
+        const controller = new AbortController();
+        activeRequest.current = controller;
         setLoading(true);
         setError(null);
 
         try {
             const response = await fetch('/api/ai-insights', {
                 method: 'POST',
+                signal: controller.signal,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -70,6 +75,7 @@ export const AiInsights = ({
             });
 
             const data = await response.json();
+            if (controller.signal.aborted) return;
 
             if (!response.ok) {
                 setError(data.error ?? 'Erro ao carregar análise.');
@@ -81,15 +87,20 @@ export const AiInsights = ({
             setTopCategoryAmount(
                 (data as AiResponse).topCategoryAmount ?? null
             );
-        } catch (error) {
-            setError('Erro ao conectar. Tente novamente');
+        } catch {
+            if (!controller.signal.aborted) {
+                setError('Erro ao conectar. Tente novamente');
+            }
         } finally {
-            setLoading(false);
+            if (!controller.signal.aborted) {
+                setLoading(false);
+            }
         }
     };
 
     useEffect(() => {
         fetchInsights();
+        return () => activeRequest.current?.abort();
     }, [month, year, depositsTotal, expensesTotal, investmentsTotal, balance]);
 
     return (
