@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Inter } from 'next/font/google';
 
 import { Sidebar } from '../_components/sidebar';
@@ -22,8 +21,8 @@ import {
     TRANSACTION_PAYMENT_METHOD_LABELS,
 } from '../_constants/transaction';
 
-import editIcon from '../../assets/edit-icon.png';
-import deleteIcon from '../../assets/delete-icon.png';
+import { AddTransactionButton } from '../_components/add-transaction';
+import { DeleteTransactionButton } from '../_components/delete-transaction';
 
 const inter = Inter({
     subsets: ['latin'],
@@ -154,15 +153,20 @@ export default async function TransactionsPage() {
                                         </TableCell>
                                         <TableCell className="px-4 py-5">
                                             <div className="flex gap-4">
-                                                <Image
-                                                    src={editIcon}
-                                                    alt="Editar transação"
-                                                    className="cursor-pointer"
+                                                <AddTransactionButton
+                                                    transaction={{
+                                                        id: transaction.id,
+                                                        name: transaction.name,
+                                                        type: transaction.type,
+                                                        amount: Number(transaction.amount),
+                                                        category: transaction.category,
+                                                        paymentMethod: transaction.paymentMethod,
+                                                        date: transaction.date.toISOString().slice(0, 10),
+                                                    }}
                                                 />
-                                                <Image
-                                                    src={deleteIcon}
-                                                    alt="Deletar transação"
-                                                    className="cursor-pointer"
+                                                <DeleteTransactionButton
+                                                    id={transaction.id}
+                                                    name={transaction.name}
                                                 />
                                             </div>
                                         </TableCell>
