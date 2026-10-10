@@ -19,7 +19,10 @@ export default async function Home({ searchParams }: DashBoardPageProps) {
     const { month: monthParam } = await searchParams;
     const now = dayjs();
     const year = now.year();
-    const month = (Array.isArray(monthParam) ? monthParam[0] : monthParam) ?? now.format('MM');
+    const requestedMonth = Array.isArray(monthParam) ? monthParam[0] : monthParam;
+    const month = requestedMonth && /^(0[1-9]|1[0-2])$/.test(requestedMonth)
+        ? requestedMonth
+        : now.format('MM');
     const data = await getDashboard(month, year)
 
     return (
