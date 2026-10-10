@@ -38,10 +38,12 @@ export const RecentTransactions = async () => {
                             className={
                                 transaction.type === 'EXPENSE'
                                     ? 'text-rose-500'
-                                    : 'text-emerald-500'
+                                    : transaction.type === 'INVESTMENT'
+                                        ? 'text-blue-500'
+                                        : 'text-emerald-500'
                             }
                         >
-                            {transaction.type === 'EXPENSE' ? '-' : '+'}
+                            {transaction.type === 'DEPOSIT' ? '+' : '-'}
                             {Number(transaction.amount).toLocaleString('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL',
