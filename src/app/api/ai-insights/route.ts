@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { auth } from '@/src/lib/auth';
 import { TRANSACTION_CATEGORY_LABELS } from '../../_constants/transaction';
-import type { TransactionCategory } from '../../../generated/prisma/client';
+import { TransactionCategory } from '../../../generated/prisma/enums';
+import { z } from 'zod';
 
 const MONTH_NAMES: Record<string, string> = {
     '01': 'Janeiro',
@@ -19,21 +20,19 @@ const MONTH_NAMES: Record<string, string> = {
     '12': 'Dezembro',
 };
 
-interface CategorySummary {
-    category: TransactionCategory;
-    totalAmount: number;
-    percentOfTotal: number;
-}
-
-interface Body {
-    month: string;
-    year: number;
-    depositsTotal: number;
-    expensesTotal: number;
-    investmentsTotal: number;
-    balance: number;
-    totalExpensePerCategory: CategorySummary[];
-}
+const insightsBodySchema = z.object({
+    month: z.string().regex(/^(0[1-9]|1[0-2])$/),
+    year: z.number().int().min(1).max(9999),
+    depositsTotal: z.number().finite().nonnegative().default(0),
+    expensesTotal: z.number().finite().nonnegative().default(0),
+    investmentsTotal: z.number().finite().nonnegative().default(0),
+    balance: z.number().finite().default(0),
+    totalExpensePerCategory: z.array(z.object({
+        category: z.enum(TransactionCategory),
+        totalAmount: z.number().finite().nonnegative(),
+        percentOfTotal: z.number().finite().min(0).max(100),
+    })).default([]),
+});
 
 function formatBRL(value: number) {
     return new Intl.NumberFormat('pt-BR', {
@@ -60,10 +59,18 @@ export async function POST(req: Request) {
         );
     }
 
-    let body: Body;
+    let body: unknown;
     try {
         body = await req.json();
     } catch {
+        return NextResponse.json(
+            { error: 'Corpo da requisição inválido.' },
+            { status: 400 }
+        );
+    }
+
+    const parsedBody = insightsBodySchema.safeParse(body);
+    if (!parsedBody.success) {
         return NextResponse.json(
             { error: 'Corpo da requisição inválido.' },
             { status: 400 }
@@ -78,11 +85,11 @@ export async function POST(req: Request) {
         investmentsTotal = 0,
         balance = 0,
         totalExpensePerCategory = [],
-    } = body;
+    } = parsedBody.data;
 
     const monthName = MONTH_NAMES[month] ?? month;
     const categoryLabels = totalExpensePerCategory
-        .map((item: CategorySummary) => {
+        .map((item) => {
             const label =
                 TRANSACTION_CATEGORY_LABELS[item.category] ?? item.category;
             return `${label}: ${formatBRL(item.totalAmount)} (${item.percentOfTotal}% do total de despesas)`;
