@@ -7,7 +7,7 @@ import { inputClass } from '../_styles/input';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { authClient } from '@/src/lib/auth-client';
+import { authClient } from '../../../../src/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 

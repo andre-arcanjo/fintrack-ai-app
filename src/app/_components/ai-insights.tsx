@@ -5,7 +5,7 @@ import insightsIcon from '../../assets/insights-icon.png';
 import starIcon from '../../assets/stars-icon.png';
 import bulbIcon from '../../assets/bulb-icon.png';
 import refreshIcon from '../../assets/refresh-icon.png';
-import { TransactionCategory } from '@/src/generated/prisma/enums';
+import { TransactionCategory } from '../../../src/generated/prisma/enums';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 
@@ -40,7 +40,8 @@ export const AiInsights = ({
     investmentsTotal,
     totalExpensePerCategory,
 }: AiInsightsProps) => {
-    const hasTransactions = depositsTotal > 0 || expensesTotal > 0 || investmentsTotal > 0;
+    const hasTransactions =
+        depositsTotal > 0 || expensesTotal > 0 || investmentsTotal > 0;
     const activeRequest = useRef<AbortController | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -105,7 +106,16 @@ export const AiInsights = ({
                 setLoading(false);
             }
         }
-    }, [month, year, depositsTotal, expensesTotal, investmentsTotal, balance, totalExpensePerCategory, hasTransactions]);
+    }, [
+        month,
+        year,
+        depositsTotal,
+        expensesTotal,
+        investmentsTotal,
+        balance,
+        totalExpensePerCategory,
+        hasTransactions,
+    ]);
 
     useEffect(() => {
         fetchInsights();

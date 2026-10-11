@@ -71,16 +71,29 @@ export const MobileSidebar = () => {
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
-                <button type="button" aria-label="Abrir menu de navegação" className="flex size-11 shrink-0 items-center justify-center rounded-lg hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-purple-500 md:hidden">
+                <button
+                    type="button"
+                    aria-label="Abrir menu de navegação"
+                    className="flex size-11 shrink-0 items-center justify-center rounded-lg hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-purple-500 md:hidden"
+                >
                     <Menu className="size-6" aria-hidden="true" />
                 </button>
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60" />
-                <Dialog.Content aria-describedby={undefined} className="fixed inset-y-0 left-0 z-50 flex h-dvh w-72 max-w-[85vw] flex-col overflow-y-auto border-r border-[#1d293d] bg-background-dark-header outline-none">
-                    <Dialog.Title className="sr-only">Menu de navegação</Dialog.Title>
+                <Dialog.Content
+                    aria-describedby={undefined}
+                    className="fixed inset-y-0 left-0 z-50 flex h-dvh w-72 max-w-[85vw] flex-col overflow-y-auto border-r border-[#1d293d] bg-background-dark-header outline-none"
+                >
+                    <Dialog.Title className="sr-only">
+                        Menu de navegação
+                    </Dialog.Title>
                     <Dialog.Close asChild>
-                        <button type="button" aria-label="Fechar menu de navegação" className="absolute right-2 top-2 flex size-11 items-center justify-center rounded-lg hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-purple-500">
+                        <button
+                            type="button"
+                            aria-label="Fechar menu de navegação"
+                            className="absolute right-2 top-2 flex size-11 items-center justify-center rounded-lg hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-purple-500"
+                        >
                             <X className="size-5" aria-hidden="true" />
                         </button>
                     </Dialog.Close>

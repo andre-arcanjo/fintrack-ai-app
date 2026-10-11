@@ -1,6 +1,6 @@
-import { TransactionType } from '@/src/generated/prisma/enums';
-import { prisma } from '@/src/lib/prisma';
-import { auth } from '@/src/lib/auth';
+import { TransactionType } from '../../../src/generated/prisma/enums';
+import { prisma } from '../../../src/lib/prisma';
+import { auth } from '../../../src/lib/auth';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 

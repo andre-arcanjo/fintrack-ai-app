@@ -10,11 +10,11 @@ import {
     TableHeader,
     TableRow,
 } from '../_components/ui/table';
-import { auth } from '@/src/lib/auth';
+import { auth } from '../../../src/lib/auth';
 import { prisma } from '../../lib/prisma';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { TransactionType } from '@/src/generated/prisma/enums';
+import { TransactionType } from '../../../src/generated/prisma/enums';
 import {
     TRANSACTION_TYPE_LABELS,
     TRANSACTION_CATEGORY_LABELS,
@@ -158,10 +158,16 @@ export default async function TransactionsPage() {
                                                         id: transaction.id,
                                                         name: transaction.name,
                                                         type: transaction.type,
-                                                        amount: Number(transaction.amount),
-                                                        category: transaction.category,
-                                                        paymentMethod: transaction.paymentMethod,
-                                                        date: transaction.date.toISOString().slice(0, 10),
+                                                        amount: Number(
+                                                            transaction.amount
+                                                        ),
+                                                        category:
+                                                            transaction.category,
+                                                        paymentMethod:
+                                                            transaction.paymentMethod,
+                                                        date: transaction.date
+                                                            .toISOString()
+                                                            .slice(0, 10),
                                                     }}
                                                 />
                                                 <DeleteTransactionButton

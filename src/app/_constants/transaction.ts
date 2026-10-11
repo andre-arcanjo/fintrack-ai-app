@@ -8,7 +8,7 @@ export const TRANSACTION_TYPE_LABELS = {
     EXPENSE: 'Despesa',
     DEPOSIT: 'Depósito',
     INVESTMENT: 'Investimento',
-}
+};
 
 export const TRANSACTION_CATEGORY_LABELS = {
     EDUCATION: 'Educação',
@@ -19,8 +19,8 @@ export const TRANSACTION_CATEGORY_LABELS = {
     OTHER: 'Outros',
     SALARY: 'Salário',
     TRANSPORTATION: 'Transporte',
-    UTILITY: 'Utilidades'
-}
+    UTILITY: 'Utilidades',
+};
 
 export const TRANSACTION_PAYMENT_METHOD_LABELS = {
     BANK_TRANSFER: 'Transferência bancária',
@@ -30,7 +30,7 @@ export const TRANSACTION_PAYMENT_METHOD_LABELS = {
     DEBIT_CARD: 'Cartão de débito',
     PIX: 'Pix',
     OTHER: 'Outros',
-}
+};
 
 export const TRANSACTION_TYPE_OPTIONS = [
     {
@@ -44,8 +44,8 @@ export const TRANSACTION_TYPE_OPTIONS = [
     {
         value: TransactionType.INVESTMENT,
         label: TRANSACTION_TYPE_LABELS[TransactionType.INVESTMENT],
-    }
-]
+    },
+];
 
 export const TRANSACTION_CATEGORY_OPTIONS = [
     {
@@ -84,16 +84,20 @@ export const TRANSACTION_CATEGORY_OPTIONS = [
         value: TransactionCategory.OTHER,
         label: TRANSACTION_CATEGORY_LABELS[TransactionCategory.OTHER],
     },
-]
+];
 
 export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
     {
         value: TransactionPaymentMethod.BANK_TRANSFER,
-        label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.BANK_TRANSFER],
+        label: TRANSACTION_PAYMENT_METHOD_LABELS[
+            TransactionPaymentMethod.BANK_TRANSFER
+        ],
     },
     {
         value: TransactionPaymentMethod.BANK_SLIP,
-        label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.BANK_SLIP],
+        label: TRANSACTION_PAYMENT_METHOD_LABELS[
+            TransactionPaymentMethod.BANK_SLIP
+        ],
     },
     {
         value: TransactionPaymentMethod.CASH,
@@ -101,11 +105,15 @@ export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
     },
     {
         value: TransactionPaymentMethod.CREDIT_CARD,
-        label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.CREDIT_CARD],
+        label: TRANSACTION_PAYMENT_METHOD_LABELS[
+            TransactionPaymentMethod.CREDIT_CARD
+        ],
     },
     {
         value: TransactionPaymentMethod.DEBIT_CARD,
-        label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.DEBIT_CARD],
+        label: TRANSACTION_PAYMENT_METHOD_LABELS[
+            TransactionPaymentMethod.DEBIT_CARD
+        ],
     },
     {
         value: TransactionPaymentMethod.PIX,
@@ -113,6 +121,8 @@ export const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
     },
     {
         value: TransactionPaymentMethod.OTHER,
-        label: TRANSACTION_PAYMENT_METHOD_LABELS[TransactionPaymentMethod.OTHER],
+        label: TRANSACTION_PAYMENT_METHOD_LABELS[
+            TransactionPaymentMethod.OTHER
+        ],
     },
-]
+];

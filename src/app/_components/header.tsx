@@ -1,44 +1,44 @@
-import Image from "next/image"
-import Avatar from '../../assets/avatar.png'
-import { auth } from "@/src/lib/auth"
-import { headers } from "next/headers"
-import { MobileSidebar } from './sidebar'
+import Image from 'next/image';
+import Avatar from '../../assets/avatar.png';
+import { auth } from '@/src/lib/auth';
+import { headers } from 'next/headers';
+import { MobileSidebar } from './sidebar';
 
 export default async function Header() {
-  const session = await auth.api.getSession({
-    headers: await headers()
-  })
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
 
-  const user = session?.user
-  const userName = user?.name.split(" ")[0]
-  
-  return (
-    <header className="min-h-20 flex items-center justify-between gap-3 px-4 md:px-8 bg-background-dark-header border-b sticky top-0 z-30 border-[#1D293D]">
-      <MobileSidebar />
-      <div className="min-w-0 flex-1 py-3">
-        <h2 className="text-sm md:text-lg font-semibold">
-          Bem-vindo de volta! {userName} 👋
-        </h2>
-        <p className="text-xs text-slate-500">
-          {new Date().toLocaleDateString("pt-BR", {
-            weekday: "long",
-            day: "2-digit",
-            month: "long"
-          })}
-        </p>
-      </div>
+    const user = session?.user;
+    const userName = user?.name.split(' ')[0];
 
-      <div className="flex shrink-0 items-center gap-4">
-        <div className="w-10 h-10 rounded-full overflow-hidden border">
-          <Image
-            src={Avatar}
-            alt="Avatar"
-            width={40}
-            height={40}
-            className="object-cover"
-          />
-        </div>
-      </div>
-    </header>
-  )
+    return (
+        <header className="min-h-20 flex items-center justify-between gap-3 px-4 md:px-8 bg-background-dark-header border-b sticky top-0 z-30 border-[#1D293D]">
+            <MobileSidebar />
+            <div className="min-w-0 flex-1 py-3">
+                <h2 className="text-sm md:text-lg font-semibold">
+                    Bem-vindo de volta! {userName} 👋
+                </h2>
+                <p className="text-xs text-slate-500">
+                    {new Date().toLocaleDateString('pt-BR', {
+                        weekday: 'long',
+                        day: '2-digit',
+                        month: 'long',
+                    })}
+                </p>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-4">
+                <div className="w-10 h-10 rounded-full overflow-hidden border">
+                    <Image
+                        src={Avatar}
+                        alt="Avatar"
+                        width={40}
+                        height={40}
+                        className="object-cover"
+                    />
+                </div>
+            </div>
+        </header>
+    );
 }

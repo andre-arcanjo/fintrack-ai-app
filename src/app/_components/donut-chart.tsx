@@ -48,8 +48,8 @@ export function DonutChart({
     }
 
     return (
-            <div className="w-full flex flex-col">
-                <div className='relative w-full h-64'>
+        <div className="w-full flex flex-col">
+            <div className="relative w-full h-64">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie
@@ -60,8 +60,7 @@ export function DonutChart({
                             outerRadius={90}
                             paddingAngle={data.length > 1 ? 6 : 0}
                             stroke="none"
-                        >
-                        </Pie>
+                        ></Pie>
                     </PieChart>
                 </ResponsiveContainer>
 

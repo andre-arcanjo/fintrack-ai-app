@@ -1,5 +1,5 @@
-import { auth } from '@/src/lib/auth';
-import { prisma } from '@/src/lib/prisma';
+import { auth } from '../../../src/lib/auth';
+import { prisma } from '../../../src/lib/prisma';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 

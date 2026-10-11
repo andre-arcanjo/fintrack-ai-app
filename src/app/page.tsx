@@ -15,15 +15,17 @@ interface DashBoardPageProps {
 }
 
 export default async function Home({ searchParams }: DashBoardPageProps) {
-
     const { month: monthParam } = await searchParams;
     const now = dayjs();
     const year = now.year();
-    const requestedMonth = Array.isArray(monthParam) ? monthParam[0] : monthParam;
-    const month = requestedMonth && /^(0[1-9]|1[0-2])$/.test(requestedMonth)
-        ? requestedMonth
-        : now.format('MM');
-    const data = await getDashboard(month, year)
+    const requestedMonth = Array.isArray(monthParam)
+        ? monthParam[0]
+        : monthParam;
+    const month =
+        requestedMonth && /^(0[1-9]|1[0-2])$/.test(requestedMonth)
+            ? requestedMonth
+            : now.format('MM');
+    const data = await getDashboard(month, year);
 
     return (
         <div className="flex min-h-screen bg-background-dark">
@@ -33,7 +35,11 @@ export default async function Home({ searchParams }: DashBoardPageProps) {
                 <main className="p-8 space-y-8">
                     <section className="grid lg:grid-cols-3 grid-cols-1 gap-6">
                         <div className="lg:col-span-2 col-span-1">
-                            <BalanceCard balance={data.balance} depositsTotal={data.depositsTotal} expensesTotal={data.expensesTotal} />
+                            <BalanceCard
+                                balance={data.balance}
+                                depositsTotal={data.depositsTotal}
+                                expensesTotal={data.expensesTotal}
+                            />
                         </div>
                         <FinancialMetricCard
                             savings={data.savings}
@@ -60,7 +66,11 @@ export default async function Home({ searchParams }: DashBoardPageProps) {
                                 investmentsTotal={data.investmentsTotal}
                                 balance={data.balance}
                                 totalExpensePerCategory={data.totalExpensesPerCategory.map(
-                                    ({ category, totalAmount, percentTotal }) => ({
+                                    ({
+                                        category,
+                                        totalAmount,
+                                        percentTotal,
+                                    }) => ({
                                         category,
                                         totalAmount,
                                         percentOfTotal: percentTotal,

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { auth } from '@/src/lib/auth';
+import { auth } from '../../../../src/lib/auth';
 import { TRANSACTION_CATEGORY_LABELS } from '../../_constants/transaction';
 import { TransactionCategory } from '../../../generated/prisma/enums';
 import { z } from 'zod';
@@ -27,11 +27,15 @@ const insightsBodySchema = z.object({
     expensesTotal: z.number().finite().nonnegative().default(0),
     investmentsTotal: z.number().finite().nonnegative().default(0),
     balance: z.number().finite().default(0),
-    totalExpensePerCategory: z.array(z.object({
-        category: z.enum(TransactionCategory),
-        totalAmount: z.number().finite().nonnegative(),
-        percentOfTotal: z.number().finite().min(0).max(100),
-    })).default([]),
+    totalExpensePerCategory: z
+        .array(
+            z.object({
+                category: z.enum(TransactionCategory),
+                totalAmount: z.number().finite().nonnegative(),
+                percentOfTotal: z.number().finite().min(0).max(100),
+            })
+        )
+        .default([]),
 });
 
 function formatBRL(value: number) {

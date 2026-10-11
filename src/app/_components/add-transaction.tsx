@@ -41,17 +41,23 @@ export type EditableTransaction = Omit<CreateTransactionFormData, 'date'> & {
     date: string;
 };
 
-export const AddTransactionButton = ({ transaction }: { transaction?: EditableTransaction }) => {
+export const AddTransactionButton = ({
+    transaction,
+}: {
+    transaction?: EditableTransaction;
+}) => {
     const [open, setIsOpen] = useState<boolean>(false);
     const [apiError, setApiError] = useState('');
-    const defaultValues = transaction ? {
-        name: transaction.name,
-        amount: transaction.amount,
-        type: transaction.type,
-        category: transaction.category,
-        paymentMethod: transaction.paymentMethod,
-        date: transaction.date,
-    } : { name: '', amount: '', date: '' };
+    const defaultValues = transaction
+        ? {
+              name: transaction.name,
+              amount: transaction.amount,
+              type: transaction.type,
+              category: transaction.category,
+              paymentMethod: transaction.paymentMethod,
+              date: transaction.date,
+          }
+        : { name: '', amount: '', date: '' };
 
     const {
         register,
@@ -59,7 +65,11 @@ export const AddTransactionButton = ({ transaction }: { transaction?: EditableTr
         reset,
         control,
         formState: { errors, isSubmitting },
-    } = useForm<z.input<typeof createTransactionFormSchema>, unknown, CreateTransactionFormData>({
+    } = useForm<
+        z.input<typeof createTransactionFormSchema>,
+        unknown,
+        CreateTransactionFormData
+    >({
         resolver: zodResolver(createTransactionFormSchema),
         defaultValues,
         mode: 'onBlur',
@@ -67,20 +77,22 @@ export const AddTransactionButton = ({ transaction }: { transaction?: EditableTr
 
     const onSubmit = async (data: CreateTransactionFormData) => {
         setApiError('');
-        try{
-        if (transaction) {
-            const result = await updateTransaction(transaction.id, data);
-            if (result.error) {
-                setApiError(result.error);
-                return;
+        try {
+            if (transaction) {
+                const result = await updateTransaction(transaction.id, data);
+                if (result.error) {
+                    setApiError(result.error);
+                    return;
+                }
+            } else {
+                await addTransaction(data);
             }
-        } else {
-            await addTransaction(data);
-        }
-        reset();
-        setIsOpen(false);
-        }catch {
-            setApiError('Não foi possível salvar a transação. Tente novamente.');
+            reset();
+            setIsOpen(false);
+        } catch {
+            setApiError(
+                'Não foi possível salvar a transação. Tente novamente.'
+            );
         }
     };
 
@@ -99,16 +111,32 @@ export const AddTransactionButton = ({ transaction }: { transaction?: EditableTr
                 <DialogTrigger asChild>
                     <button
                         type="button"
-                        aria-label={transaction ? `Editar transação ${transaction.name}` : undefined}
-                        className={transaction ? 'cursor-pointer' : 'rounded-sm bg-[#9333EA] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transaction-colors flex items-center gap-2 cursor-pointer'}
+                        aria-label={
+                            transaction
+                                ? `Editar transação ${transaction.name}`
+                                : undefined
+                        }
+                        className={
+                            transaction
+                                ? 'cursor-pointer'
+                                : 'rounded-sm bg-[#9333EA] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/20 transaction-colors flex items-center gap-2 cursor-pointer'
+                        }
                     >
-                        {transaction ? <Image src={editIcon} alt="" /> : <p>+ Adicionar</p>}
+                        {transaction ? (
+                            <Image src={editIcon} alt="" />
+                        ) : (
+                            <p>+ Adicionar</p>
+                        )}
                     </button>
                 </DialogTrigger>
 
                 <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-card-dark text-white">
                     <DialogHeader className="p-2 pr-8">
-                        <DialogTitle>{transaction ? 'Editar transação' : 'Nova transação'}</DialogTitle>
+                        <DialogTitle>
+                            {transaction
+                                ? 'Editar transação'
+                                : 'Nova transação'}
+                        </DialogTitle>
                     </DialogHeader>
 
                     <form
@@ -266,7 +294,11 @@ export const AddTransactionButton = ({ transaction }: { transaction?: EditableTr
                             )}
                         </div>
 
-                        {apiError && <p role="alert" className="text-sm text-red-500">{apiError}</p>}
+                        {apiError && (
+                            <p role="alert" className="text-sm text-red-500">
+                                {apiError}
+                            </p>
+                        )}
 
                         <DialogFooter className="gap-3 border-none bg-card-dark sm:gap-4">
                             <button

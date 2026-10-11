@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { getRecentTransactions } from '../_data/get-recent-transactions';
 
 export const RecentTransactions = async () => {
-    
-    const recentTransactions = await getRecentTransactions()
+    const recentTransactions = await getRecentTransactions();
 
     return (
         <div>
@@ -39,15 +38,18 @@ export const RecentTransactions = async () => {
                                 transaction.type === 'EXPENSE'
                                     ? 'text-rose-500'
                                     : transaction.type === 'INVESTMENT'
-                                        ? 'text-blue-500'
-                                        : 'text-emerald-500'
+                                      ? 'text-blue-500'
+                                      : 'text-emerald-500'
                             }
                         >
                             {transaction.type === 'DEPOSIT' ? '+' : '-'}
-                            {Number(transaction.amount).toLocaleString('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL',
-                            })}
+                            {Number(transaction.amount).toLocaleString(
+                                'pt-BR',
+                                {
+                                    style: 'currency',
+                                    currency: 'BRL',
+                                }
+                            )}
                         </span>
                     </div>
                 ))}
