@@ -18,7 +18,7 @@ export default function BalanceCard({
                 <div>
                     <p className="text-sm">Saldo total</p>
 
-                    <h3 className="text-5xl font-bold">
+                    <h3 className="text-[38px] lg:text-5xl font-bold">
                         {balance.toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',

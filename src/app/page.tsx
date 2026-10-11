@@ -28,7 +28,7 @@ export default async function Home({ searchParams }: DashBoardPageProps) {
     return (
         <div className="flex min-h-screen bg-background-dark">
             <Sidebar />
-            <div className="flex flex-1 flex-col">
+            <div className="flex min-w-0 flex-1 flex-col">
                 <Header />
                 <main className="p-8 space-y-8">
                     <section className="grid lg:grid-cols-3 grid-cols-1 gap-6">

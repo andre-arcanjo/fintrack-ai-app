@@ -66,7 +66,7 @@ export default async function TransactionsPage() {
         <div className="flex min-h-screen bg-background-dark-header">
             <Sidebar />
 
-            <div className={`flex flex-1 flex-col ${inter.className}`}>
+            <div className={`flex min-w-0 flex-1 flex-col ${inter.className}`}>
                 <Header />
 
                 <main className="p-8">
