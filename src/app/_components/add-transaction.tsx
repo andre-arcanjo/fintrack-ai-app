@@ -112,7 +112,7 @@ export const AddTransactionButton = ({ transaction }: { transaction?: EditableTr
                     </DialogHeader>
 
                     <form
-                        className="flex min-w-0 flex-col gap-4 pt-2 sm:pt-4 [&_[data-slot=input]]:min-h-11 sm:[&_[data-slot=input]]:min-h-8 [&_[data-slot=select-trigger]]:min-h-11 sm:[&_[data-slot=select-trigger]]:min-h-8 [&_[data-slot=select-value]]:min-w-0 [&_[data-slot=select-value]]:flex-1 [&_[data-slot=select-value]]:text-left"
+                        className="flex min-w-0 flex-col gap-4 pt-2 sm:pt-4 **:data-[slot=input]:min-h-11 sm:**:data-[slot=input]:min-h-8 **:data-[slot=select-trigger]:min-h-11 sm:**:data-[slot=select-trigger]:min-h-8 **:data-[slot=select-value]:min-w-0 **:data-[slot=select-value]:flex-1 **:data-[slot=select-value]:text-left"
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <div className="space-y-2">
