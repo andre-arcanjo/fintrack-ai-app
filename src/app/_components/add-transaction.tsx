@@ -106,13 +106,13 @@ export const AddTransactionButton = ({ transaction }: { transaction?: EditableTr
                     </button>
                 </DialogTrigger>
 
-                <DialogContent className="bg-card-dark text-white">
-                    <DialogHeader className="p-2">
+                <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-card-dark text-white">
+                    <DialogHeader className="p-2 pr-8">
                         <DialogTitle>{transaction ? 'Editar transação' : 'Nova transação'}</DialogTitle>
                     </DialogHeader>
 
                     <form
-                        className="flex flex-col gap-4 pt-4"
+                        className="flex min-w-0 flex-col gap-4 pt-2 sm:pt-4 [&_[data-slot=input]]:min-h-11 sm:[&_[data-slot=input]]:min-h-8 [&_[data-slot=select-trigger]]:min-h-11 sm:[&_[data-slot=select-trigger]]:min-h-8 [&_[data-slot=select-value]]:min-w-0 [&_[data-slot=select-value]]:flex-1 [&_[data-slot=select-value]]:text-left"
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <div className="space-y-2">
@@ -268,18 +268,18 @@ export const AddTransactionButton = ({ transaction }: { transaction?: EditableTr
 
                         {apiError && <p role="alert" className="text-sm text-red-500">{apiError}</p>}
 
-                        <DialogFooter className="gap-4 border-none bg-card-dark">
+                        <DialogFooter className="gap-3 border-none bg-card-dark sm:gap-4">
                             <button
                                 type="button"
                                 onClick={() => handleOpenChange(false)}
                                 disabled={isSubmitting}
-                                className="border border-[#CAD5E2] rounded-lg w-1/3 py-2.5 cursor-pointer"
+                                className="border border-[#CAD5E2] rounded-lg min-h-11 w-full py-2.5 cursor-pointer sm:w-1/3"
                             >
                                 Cancelar
                             </button>
                             <button
                                 type="submit"
-                                className="bg-[#8E51FF] w-2/3 flex items-center justify-center gap-2 rounded-xl cursor-pointer"
+                                className="bg-[#8E51FF] min-h-11 w-full py-2.5 flex items-center justify-center gap-2 rounded-xl cursor-pointer sm:w-2/3"
                                 disabled={isSubmitting}
                             >
                                 <Image src={ConfirmIcon} alt="Confirm Icon" />
