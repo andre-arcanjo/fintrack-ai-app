@@ -160,12 +160,3 @@ O componente de análises envia o resumo do período para `POST /api/ai-insights
 
 São enviados à OpenAI os totais de entradas, despesas, investimentos, saldo e gastos por categoria, junto com o mês e o ano. O componente solicita a análise automaticamente quando há transações no período e permite atualizá-la pela interface.
 
-## Verificação
-
-Para verificar problemas de código:
-
-```bash
-npm run lint
-```
-
-O projeto ainda não possui um script de testes automatizados no `package.json`.
